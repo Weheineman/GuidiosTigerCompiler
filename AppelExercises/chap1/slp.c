@@ -8,7 +8,7 @@ A_stm A_CompoundStm(A_stm stm1, A_stm stm2) {
 }
 
 
-A_stm A_AssignStm(string id, A_exp exp) {
+A_stm A_AssignStm(cString id, A_exp exp) {
   A_stm s = checked_malloc(sizeof *s);
   s->kind=A_assignStm; s->u.assign.id=id; s->u.assign.exp=exp;
   return s;
@@ -20,7 +20,7 @@ A_stm A_PrintStm(A_expList exps) {
   return s;
 }
 
-A_exp A_IdExp(string id) {
+A_exp A_IdExp(cString id) {
   A_exp e = checked_malloc(sizeof *e);
   e->kind=A_idExp; e->u.id=id;
   return e;
@@ -55,6 +55,3 @@ A_expList A_LastExpList(A_exp last) {
   e->kind=A_lastExpList; e->u.last=last;
   return e;
 }
-
-
-

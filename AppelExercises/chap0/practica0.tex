@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{epsfig}
+\usepackage{graphicx}
+
+\usepackage{exercise}
+\usepackage{listings}
+
+\lstset{language=Ml}
+
+\title{%
+	Compiladores - LCC\\
+	Práctica 0. \\
+	Introducción a Tiger
+}
+\date{}
+\author{}
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{Exercise}
+%\end{Exercise}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Exercise}
+    Escribir un ``Hola Mundo!'' en Tiger.
+\end{Exercise}
+
+\begin{Exercise}
+    Las listas de enteros pueden representarse utilizando el siguiente record. 
+    \begin{lstlisting}
+    lista = {item: int, resto:lista}
+    \end{lstlisting}
+    Implemente las siguientes funciones:
+\begin{itemize}
+    \item \lstinline{cons} que recibe dos argumentos, un entero y una lista. Devuelve
+        la lista formada por el entero seguido de la lista.
+    \item \lstinline{length} que recibe una lista de enteros, y devuelve la longitud
+        de la misma.
+    \item \lstinline{concat} que recibe dos listas como argumentos y las concatena.
+    \item \lstinline{snoc} que recibe dos argumentos: un entero $x$ y una lista $xs$.
+        Devuelve la lista $xs$ con el elemento $x$ al final.
+    \item \lstinline{filtra} que recibe un entero n y una lista l. Devuelve una lista formada por los elementos de l que no son iguales a n, manteniendo el orden de l.
+    \item \lstinline{isin} que recibe dos argumentos: un entero $x$ y una lista $xs$.
+        Devolviendo verdadero si $x$ aparece al menos una vez en $xs$.
+    \item \lstinline{remove} que recibe dos argumentos: un entero $x$ y una lista
+        $xs$. Devolviendo el resultado de borrar la primer aparici\'on de $x$ en
+        $xs$ en el caso que $isin(x,xs)$ sea verdadero.
+    \item \lstinline{removeall} que recibe dos argumentos similar a \verb1remove1
+        pero que elimina todas las apariciones de $x$ en $xs$.
+    \item \lstinline{reverse} que recibe una lista de enteros, y retorna la lista en
+        orden inverso.
+    \item \lstinline{printlist} que toma como argumento una lista de enteros y la
+        muestra por pantalla.
+\end{itemize}
+
+\begin{lstlisting}
+let
+    type lista = {item:int, resto:lista}
+    /* Definir cons         */
+    /* Definir length       */
+    /* Definir concat       */
+    /* Definir snoc         */
+    /* Definir filtra       */
+    /* Definir isin         */
+    /* Definir remove       */
+    /* Definir removeall    */
+    /* Definir reverse      */
+    /* Definir printlist    */
+in
+    nil
+end 
+\end{lstlisting}
+\end{Exercise}
+
+\begin{Exercise}
+    De forma similar a las listas de enteros del ejercicio anterior,
+    podemos definir a los árboles generales como:
+\begin{lstlisting}
+let
+  /* define a tree */
+  type tree = {key : int, children : treelist}
+  type treelist = {hd : tree, tl : treelist}
+in
+   0
+end
+\end{lstlisting}
+
+Escribir las siguientes funciones:
+\begin{itemize}
+    \item \lstinline{isBin} que dado un árbol general responda con verdadero en el
+        caso que sea un árbol binario o falso si no lo es.
+    \item \lstinline{isBComplete} que dado un árbol general responda con verdadero en
+        el caso que sea binario completo o falso en cualquier otro caso.
+    \item \lstinline{printInOrder} que imprima todos los valores recorriendo el
+        \'arbol en orden.
+    \item \lstinline{printPosOrder} que imprima todos los valores recorriendo el
+        \'arbol en orden.
+\end{itemize}
+\end{Exercise}
+
+\begin{Exercise}
+Definir las siguientes funciones:
+\begin{itemize}
+  \item \textbf{maxargs:} dado un \textit{tigerabs.exp} devuelve la máxima cantidad de argumentos con
+los cuales se ha llamado a la funci\'on \textit{print}.
+  \item \textbf{cantplus:} dado un \textit{tigerabs.exp}, contar la cantidad de veces que se
+utiliza la operaci\'on binaria de la suma.
+\end{itemize}
+\end{Exercise}
+
+\begin{Exercise}
+Encuentre el AST que corresponde a los siguientes fragmentos de código. Puede usar la primera versión del compilador, comentando la línea
+
+\verb1val _ = findEscape(expr)1
+en \emph{tigermain.sml}.
+\begin{itemize}
+ \item [a)] \verb2a := 102
+ \item [b)] \verb1for i := 0 to c do print (".")1
+ \item [c)] \verb2f[a+1].data[0]2
+ \item [d)]
+ 
+ \begin{verbatim}
+let
+    var f := 10
+in
+    f(f, f); f
+end
+ \end{verbatim}
+ 
+ \item [e)] \verb1type lista = {item:int, resto:lista}1
+ \item [f)] \verb1if row[r]=0 & a<b then g(r)1
+\end{itemize}
+
+¿Todos los fragmentos pueden ser parte de un programa válido? ¿Por qué hay un problema al copiar directamente el fragmento \emph{e}? Descomente la línea comentada anteriormente. ¿Qué error detecta ahora el compilador?
+\end{Exercise}
+
+\begin{Exercise}
+% \section{}
+Encuentre el código que genera los siguientes ASTs. No tome en cuenta el valor del campo \verb1pos1.
+
+\begin{itemize}
+ \item [a)] \verb2ArrayExp({init = IntExp(5, 0), size = IntExp(10, 0), typ = "a"}, 0)2
+ \item [b)] \verb1VarExp(SubscriptVar(SimpleVar "a", IntExp(7, 0)), 0)1
+ \item [c)] \verb1AssignExp({exp = NilExp 0, var = SimpleVar "a"}, 0)1
+\end{itemize}
+\end{Exercise}
+
+\begin{Exercise}
+    Implementar \textit{pretty printers} para los siguientes \textit{datatypes}:
+    \begin{itemize}
+        \item \verb1EnvEntry1
+        \item \verb1Tipo1
+    \end{itemize}
+    Implementar la función 
+    \begin{lstlisting}
+val tabPrint : ('a -> string) * ('b -> string) * ('a, 'b) Tabla -> string
+    \end{lstlisting}
+    % \lstinline{val tabPrint : ('a -> string) * ('b -> string) * ('a, 'b) Tabla    -> string}.
+\end{Exercise}
+
+\end{document}
